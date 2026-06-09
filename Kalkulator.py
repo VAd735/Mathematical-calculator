@@ -204,32 +204,32 @@ def solve_interpolation():
     
     print("\n Podaj współrzędne punktów (sortuj według rosnącego X):")
     for i in range(n):
-        # Називаємо змінні val_x oraz val_y, щоб не було конфлікту зі списками
-        val_x = get_float_input(f" Punkt {i+1} -> X: ")
+        val_x = get_float_input(f" Punkt {i+1} -> X: ") # Називаємо змінні val_x oraz val_y, щоб не було конфлікту зі списками
         val_y = get_float_input(f" Punkt {i+1} -> Y: ")
         
-        # Додаємо їх до відповідних списков
-        x_pts.append(val_x)
+        x_pts.append(val_x)  # Додаємо їх до відповідних списков
         y_pts.append(val_y)
-
-    x = np.array(x_pts)
+    x = np.array(x_pts) # Конвертація списків у масиви NumPy
     y = np.array(y_pts)
     
+    # Перевірка умови строгого зростання аргументу X (необхідно для інтерполяції)
     if not np.all(np.diff(x) > 0):
         print("\n Błąd: Współrzędne X muszą być podane w porządku rosnącym!")
         print(" Upewnij się, że X1 < X2 < ... < Xn.")
         return
 
-    cs = CubicSpline(x, y)
+    cs = CubicSpline(x, y) # Обчислення коефіцієнтів кубічного сплайну за допомогою SciPy
     
+    # Генерація 300 точок на інтервалі від X_min до X_max для побудови плавної лінії
     x_fine = np.linspace(x.min(), x.max(), 300)
-    y_interp = cs(x_fine)
+    y_interp = cs(x_fine) # Розрахунок інтерпольованих значень Y
     
     print("\n Obliczenia zakończone sukcesem. Generowanie wykresu...")
     
+    # --- Побудова та візуалізація графіка за допомогою Matplotlib ---
     plt.figure (figsize = (8, 5))
-    plt.scatter (x, y, color = 'red', s = 60, zorder = 5, label = 'Punkty węzłowe (Dane)')
-    plt.plot (x_fine, y_interp, color = 'blue', linewidth = 2, label = 'Interpolacja (Cubic Spline)')
+    plt.scatter (x, y, color = 'red', s = 60, zorder = 5, label = 'Punkty węzłowe (Dane)') # Початкові точки
+    plt.plot (x_fine, y_interp, color = 'blue', linewidth = 2, label = 'Interpolacja (Cubic Spline)') # Лінія сплайну
     plt.title ('Interpolacja Splajnem Sześciennym')
     plt.xlabel ('X')
     plt.ylabel ('Y')
