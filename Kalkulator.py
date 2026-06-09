@@ -5,16 +5,18 @@ import matplotlib.pyplot as plt
 from scipy.interpolate import CubicSpline 
 
 def get_float_input(prompt):
-    """\nFunkcja pomocnicza umożliwiająca bezpieczne wprowadzanie numerów."""
-    while True:
+    """
+    Funkcja pomocnicza umożliwiająca bezpieczne wprowadzanie numerów.
+    Допоміжна функція для безпечного введення чисел з ручною обробкою винятків.
+    """
+    while True: # Спроба конвертувати введене значення у число з плаваючою крапкою
         try:
             return float(input(prompt))
         except ValueError:
-            print("\nBłąd wartości! Prosze wprowadzic wartosc liczbową.")
+            print("\nBłąd wartości! Prosze wprowadzic wartosc liczbową.") # Обробка помилки, якщо користувач ввів текст замість числа
 
-Bold = '\033[1m'
+Bold = '\033[1m' # Керуючі послідовності ANSI для форматування жирного тексту в консолі
 End = '\033[0m'
-
 """========================================================================================================================================================"""
 
 def solve_nonlinear():
