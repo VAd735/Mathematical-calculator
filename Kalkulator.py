@@ -102,7 +102,7 @@ def solve_integration():
 def solve_linear_systems():
     print("\n\t--- 3. Układy równań liniowych (metoda Gaussa) ---")
     print(" Wybierz rozmiar macierzy:")
-    print(" 1. [2×3]")
+    print(" 1. [2×3] (2 equations, 2 variables + 1 constant column)")
     print(" 2. [3×3]")
     print(" 3. [4×3]")
     print(" 4. [4×4]")
@@ -110,21 +110,15 @@ def solve_linear_systems():
     print(" 6. [5×4]")
     print(" 7. [5×5]")
 
+    # Вибір розмірності системи
     choice = input("\n Wybierz rozmiar (1-7): ")
-    if choice == '1':
-        n, m = 2, 3
-    elif choice == '2':
-        n, m = 3, 3
-    elif choice == '3':
-        n, m = 4, 3
-    elif choice == '4':
-        n, m = 4, 4
-    elif choice == '5':
-        n, m = 5, 3
-    elif choice == '6':
-        n, m = 5, 4
-    elif choice == '7':
-        n, m = 5, 5
+    if choice == '1': n, m = 2, 3
+    elif choice == '2': n, m = 3, 3
+    elif choice == '3': n, m = 4, 3
+    elif choice == '4': n, m = 4, 4
+    elif choice == '5': n, m = 5, 3
+    elif choice == '6': n, m = 5, 4
+    elif choice == '7': n, m = 5, 5
     else:
         print("\n Niewłaściwy wybór.")
         return
@@ -133,41 +127,44 @@ def solve_linear_systems():
     print(" Proces: tworzymy macierz rozszerzoną, normalizujemy wiersze i eliminujemy współczynniki poniżej pivotu.")
     print(" Na koniec wykonujemy podstawianie wsteczne, aby obliczyć wartości zmiennych.")
     
-    matrix = []
+    matrix = [] # Інтерактивне заповнення розширеної матриці системи
     for i in range(n):
         row = []
         for j in range(m):
             coeff = get_float_input(f" Równanie {i+1}: wprowadź współczynnik x{j+1}: ")
             row.append(coeff)
         const = get_float_input(f" Równanie {i+1}: wprowadź wolny wyraz: ")
-        row.append(const)
+        row.append(const) # Додаємо вільний член у кінець рядка
         matrix.append(row)
 
     print(" Początkowa macierz:")
     for row in matrix: print(row)
 
+    # --- ПРЯМИЙ ХІД МЕТОДУ ГАУССА ---
     for i in range(min(n, m)):
+        # Частковий вибір головного елемента (пошук максимального по модулю в поточному стовпчику)
         pivot_row = i
         for k in range(i+1, n):
             if abs(matrix[k][i]) > abs(matrix[pivot_row][i]):
                 pivot_row = k
 
-        if pivot_row != i:
+        if pivot_row != i:  # Перестановка рядків, якщо знайдено більший за модулем елемент
             matrix[i], matrix[pivot_row] = matrix[pivot_row], matrix[i]
             print(f" Zamiana wierszy {i} i {pivot_row}")
         
-        pivot = matrix[i][i]
+        pivot = matrix[i][i] # Головний (ведучий) елемент
         print(f" Wybieramy pivot w wierszu {i}: {pivot}")
         if abs(pivot) < 1e-10:
             print(" Pivot bliski zero, kontynuacja...")
             continue
 
+        # Нормалізація поточного рядка (ділимо весь рядок на pivot, щоб на діагоналі стала 1)
         for k in range(i, m + 1):
             matrix[i][k] /= pivot
         print(f" Normalizacja: Wiersz {i} podzielono przez pivot. Nowy wiersz: {matrix[i]}")
         
-        for j in range(i + 1, n):
-            factor = matrix[j][i]
+        for j in range(i + 1, n): # Занулення елементів під головним елементом в інших рядках
+            factor = matrix[j][i] # Коефіцієнт, який треба занулити
             print(f" Eliminacja: odejmujemy {factor:.4f} razy wiersz {i} od wiersza {j}.")
             for k in range(i, m + 1):
                 matrix[j][k] -= factor * matrix[i][k]
@@ -176,13 +173,15 @@ def solve_linear_systems():
     print(" Po eliminacji otrzymujemy macierz w postaci trójkątnej.")
     for row in matrix: print(row)
     
+    # --- ЗВОРОТНИЙ ХІД МЕТОДУ ГАУССА (працює тільки для квадратних систем n == m) ---
     if n == m:
-        x_res = [0 for _ in range(n)]
-        for i in range(n - 1, -1, -1):
-            x_res[i] = matrix[i][n]
+        x_res = [0 for _ in range(n)] # Масив для збереження коренів
+        for i in range(n - 1, -1, -1): # Рух знизу вгору по матриці
+            x_res[i] = matrix[i][n]     # Початкове значення рівне вільному члену
             for k in range(i + 1, n):
-                x_res[i] -= matrix[i][k] * x_res[k]
+                x_res[i] -= matrix[i][k] * x_res[k] # Віднімання вже відомих змінних
             print(f"\n x{i+1} = {x_res[i]:.4f}")
+        # Виведення вектору результатів
         print(f"*** Wynik: {', '.join([f'x{i+1} = {x:.4f}' for i, x in enumerate(x_res)])} ***")
     else:
         print("\n System nie jest kwadratowy. Macierz w formie echelonnej powyżej.")
