@@ -20,41 +20,49 @@ End = '\033[0m'
 """========================================================================================================================================================"""
 
 def solve_nonlinear():
+    """
+    Метод бісекції (ділення навпіл) для розв'язання нелінійних рівнянь.
+    Шукає корінь на проміжку [a, b], де функція змінює знак.
+    """
     print("\n\t--- 1. Równania nieliniowe (Metoda bisekcji) ---")
     print(f" Równanie za domyślnym: {Bold}f(x) = 3 × x² - 4{End}")
     print(" Proces: metoda bisekcji zamienia przedział [a, b] na coraz mniejszy przedział zawierający pierwiastek.")
     print(" Na każdym kroku obliczamy środek przedziału, sprawdzamy znak funkcji i wybieramy podprzedział.")
     
+    # Визначення цільової функції f(x) за допомогою лямбда-виразу
     f = lambda x: 3 * x**2 - 4
     
+    # Введення меж проміжку та бажаної точності (критерій зупинки)
     a = get_float_input(" Wprowadź początek przedziału (a): ")
     b = get_float_input(" Wprowadź koniec przedziału (b): ")
     e = get_float_input(" Wprowadź dokładność (np. 0.1): ")
     
+    # Перевірка теореми Больцано-Коші: на кінцах проміжку значення мають бути різних знаків
     if f(a) * f(b) >= 0:
         print(f"\n Błąd: Funkcja musi mieć różne znaki na końcach przedziału {Bold}f({a}) * f({b}) < 0{End}.")
         print(" Oznacza to, że w przedziale musi istnieć przynajmniej jedno miejsce, gdzie funkcja zmienia znak.")
         return
     
     step = 0
+    # Цикл виконується, поки напівдовжина поточного інтервалу більша за задану точність 'e'
     while (b - a) / 2 > e:
         step += 1
-        xc = (a + b) / 2
-        fm = f(xc)
+        xc = (a + b) / 2 # Знаходження середини відрізка
+        fm = f(xc)       # Значення функції в середній точці
         print(f" Krok {step}: a = {a:.4f}; b = {b:.4f}; środek = {xc:.4f}; f(a) = {f(a):.4f}; f(b) = {f(b):.4f}; f(mid) = {fm:.4f}")
         
-        if fm == 0:
+        if fm == 0: # Якщо випадково потрапили точно в корінь
             print("\n Znaleziono dokładny pierwiastek w środku przedziału.")
             break
-        elif f(a) * fm < 0:
+        elif f(a) * fm < 0: # Якщо знак змінюється на лівій половині, переносимо праву межу 'b' в центр 'xc'
             print("\n Ponieważ f({a}) i f({xc}) mają przeciwne znaki, rozwiązanie jest w lewym podprzedziale.")
             b = xc
-        else:
+        else: # Інакше корінь у правій половині, переносимо ліву межу 'a' в центр 'xc'
             print("\n Ponieważ f({xc}) i f({b}) mają przeciwne znaki, rozwiązanie jest w prawym podprzedziale.")
             a = xc
-            print(f" Krok {step}: a = {a:.4f}; b = {b:.4f}; środek = {xc:.4f}; f(a) = {f(a):.4f}; f(b) = {f(b):.4f}; f(mid) = {fm:.4f}")
-    print(f"*** Wynik: x ≈ {(a + b) / 2:.4f} ***")
-
+            print(f" Krok {step}: a = {a:.4f}; b = {b:.4f}; środek = {xc:.4f}; f(a) = {f(a):.4f}; f(b) = {f(b):.4f}; f(mid) = {fm:.4f}") # Дублювання виводу (можна прибрати, але залишено за оригіналом образу коду)
+            
+    print(f"*** Wynik: x ≈ {(a + b) / 2:.4f} ***") # Виведення фінального наближеного значення кореня
 """========================================================================================================================================================"""
 
 def solve_integration():
