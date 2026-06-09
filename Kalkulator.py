@@ -295,10 +295,9 @@ def solve_approximation():
 """========================================================================================================================================================"""
 
 def main_menu():
-    """Główne menu programu."""
     while True:
         print(f"    ============================================")
-        print("              KALKULATOR MATEMATYCZNY")
+        print("             KALKULATOR MATEMATYCZNY")
         print( "    ============================================")
         print("\t1. Rozwiąż  równanie  nieliniowe  (Bisekcja)")
         print("\t2. Całkowanie  numeryczne  (Trapezy)")
@@ -320,11 +319,10 @@ def main_menu():
             solve_approximation()
         elif choice == '0':
             print("     Dziękujemy za użycie!")
-            break
+            break # Вихід з безкінечного циклу, завершення програми
         else:
             print("\n Niewłaściwy wybór. Spróbuj ponownie.")
 
-if __name__ == "__main__":
+if __name__ == "__main__": # Конструкція if __name__ == "__main__" гарантує, що меню запуститься лише у разі прямого запуску файлу
     main_menu()
-
 """========================================================================================================================================================"""
