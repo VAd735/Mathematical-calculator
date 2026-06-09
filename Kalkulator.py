@@ -250,6 +250,7 @@ def solve_approximation():
         return
         
     deg = int(get_float_input(" Wprowadź stopień wielomianu (np. 1 dla prostej, 2 dla paraboli): "))
+    # Перевірка коректності степеня: для поліному степеня d потрібно щонайменше d+1 унікальних точок
     if deg >= n:
         print(f"\n Błąd: Stopień wielomianu ({deg}) musi być mniejszy niż liczba punktów ({n})!")
         return
@@ -258,7 +259,7 @@ def solve_approximation():
     y_pts = []
     
     for i in range(n):
-        # Називаємо змінні val_x oraz val_y, щоб не було конфлікту зі списками
+        # Називаємо змінні val_x oraz val_y, щоб nie było konfliktu зі списками
         val_x = get_float_input(f" Punkt {i+1} -> X: ")
         val_y = get_float_input(f" Punkt {i+1} -> Y: ")
         
@@ -269,20 +270,21 @@ def solve_approximation():
     x = np.array(x_pts)
     y = np.array(y_pts)
     
-    coefficients = np.polyfit(x, y, deg)
-    poly_function = np.poly1d(coefficients)
+    coefficients = np.polyfit(x, y, deg) # np.polyfit знаходить коефіцієнти полінома (від вищих ступенів до нижчих) за МНК
+    poly_function = np.poly1d(coefficients) # np.poly1d створює зручний об'єкт функції-полінома на основі отриманих коефіцієнтів
     
     print("\n Otrzymany wielomian aproksymacyjny (od najwyższej potęgi):")
-    print(poly_function)
+    print(poly_function) # Виведе формулу полінома в консоль
     
-    x_fine = np.linspace(x.min(), x.max(), 300)
+    x_fine = np.linspace(x.min(), x.max(), 300) # Генерація 300 точок для плавної лінії тренду
     y_approx = poly_function(x_fine)
     
     print("\n Obliczenia zakończone sukcesem. Generowanie wykresu...")
     
+    # Візуалізація результатів апроксимації
     plt.figure (figsize = (8, 5))
-    plt.scatter (x, y, color = 'red', s = 60, zorder = 5, label = ' Punkty pomiarowe ')
-    plt.plot (x_fine, y_approx, color = 'green', linestyle = '--', linewidth = 2.5, label = f'Aproksymacja (Stopień {deg})')
+    plt.scatter (x, y, color = 'red', s = 60, zorder = 5, label = ' Punkty pomiarowe ') # Експериментальні точки
+    plt.plot (x_fine, y_approx, color = 'green', linestyle = '--', linewidth = 2.5, label = f'Aproksymacja (Stopień {deg})') # Лінія тренду
     plt.title ('Aproksymacja Wielomianowa (Metoda Najmniejszych Kwadratów)')
     plt.xlabel ('X')
     plt.ylabel ('Y')
