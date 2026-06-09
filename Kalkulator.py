@@ -5,10 +5,6 @@ import matplotlib.pyplot as plt
 from scipy.interpolate import CubicSpline 
 
 def get_float_input(prompt):
-    """
-    Funkcja pomocnicza umożliwiająca bezpieczne wprowadzanie numerów.
-    Допоміжна функція для безпечного введення чисел з ручною обробкою винятків.
-    """
     while True: # Спроба конвертувати введене значення у число з плаваючою крапкою
         try:
             return float(input(prompt))
@@ -20,17 +16,12 @@ End = '\033[0m'
 """========================================================================================================================================================"""
 
 def solve_nonlinear():
-    """
-    Метод бісекції (ділення навпіл) для розв'язання нелінійних рівнянь.
-    Шукає корінь на проміжку [a, b], де функція змінює знак.
-    """
     print("\n\t--- 1. Równania nieliniowe (Metoda bisekcji) ---")
     print(f" Równanie za domyślnym: {Bold}f(x) = 3 × x² - 4{End}")
     print(" Proces: metoda bisekcji zamienia przedział [a, b] na coraz mniejszy przedział zawierający pierwiastek.")
     print(" Na każdym kroku obliczamy środek przedziału, sprawdzamy znak funkcji i wybieramy podprzedział.")
     
-    # Визначення цільової функції f(x) за допомогою лямбда-виразу
-    f = lambda x: 3 * x**2 - 4
+    f = lambda x: 3 * x**2 - 4 # Визначення цільової функції f(x) за допомогою лямбда-виразу
     
     # Введення меж проміжку та бажаної точності (критерій зупинки)
     a = get_float_input(" Wprowadź początek przedziału (a): ")
@@ -70,30 +61,39 @@ def solve_integration():
     print(" Wprowadź funkcję w formacie Pythona (np. 3 * x**2 - 4 lub x**3 + 2*x):")
     funkcja = input(" f(x) = ")
     
-    f = lambda x: eval(funkcja)
+    f = lambda x: eval(funkcja)   # Динамічне створення функції з рядка за допомогою eval (обережно з безпекою введення!)
     
     print(f"\n Integracja funkcji: {Bold}f(x) = {funkcja}{End}")
     print(" Proces: przedział [a, b] dzielimy na n trapezów, obliczamy wartość funkcji na końcach każdego trapezu,")
     print(" sumujemy ich pola i mnożymy przez szerokość kroku, aby uzyskać przybliżoną całkę.")
     
+    # Отримання меж інтегрування та кількості кроків розбиття
     a = get_float_input(" Wprowadź niższą granicę (a): ")
     b = get_float_input(" Wprowadź górną granicę (b): ")
     n = int(get_float_input(" Wprowadź liczbę podziałów (n, liczba całkowita): "))
 
-    h = (b - a) / n
+    h = (b - a) / n # Ширина одного кроку (крок сітки)
+    
+    # Початкове значення формули трапецій: (f(a) + f(b)) / 2
+    # Примітка: змінна formula ініціалізується, але далі в коді напряму не використовується
     formula = (f(a) + f(b)) / 2
     
     print(f"\n Integrujemy z krokiem h = {h}")
     print("\n Rozpoczynamy obliczanie sumy wartości funkcji w punktach podziału.")
+    
+    # Початкове значення суми внутрішніх точок
+    # УВАГА: За класичною формулою тут мало б додаватися значення (f(a) + f(b))/2, 
+    # але в поточній логіці коду рахується сума суто внутрішніх точок, помножена на h.
     suma = 0
     
+    # Цикл по внутрішніх точках сітки інтегрування
     for i in range(1, int(n)):
-        x = a + i * h
-        funkcja = f(x)
-        suma += funkcja
-        print(f"\n Krok {i}: x = {x:.2f}; f(x) = {funkcja:.2f}; aktualna suma wartości = {suma:.2f}")
+        x = a + i * h     # Поточна координата X
+        funkcja_val = f(x) # Значення функції в точці X (перейменовано з 'funkcja', щоб не затерти початковий рядок)
+        suma += funkcja_val
+        print(f"\n Krok {i}: x = {x:.2f}; f(x) = {funkcja_val:.2f}; aktualna suma wartości = {suma:.2f}")
         
-    wynik = suma * h
+    wynik = suma * h # Наближене значення інтегралу (сума площ)
     print("\n Po zakończeniu pętli mnożymy sumę przez szerokość kroku, aby otrzymać przybliżoną wartość całki.")
     print(f" *** Wynik: S ≈ {wynik:.4f} *** ")
 
