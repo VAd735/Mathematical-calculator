@@ -9,7 +9,7 @@ def get_float_input(prompt):
     while True:
         try:
             return float(input(prompt))
-        except ValueError: print("\n Blad wartosci! Prosze wprowadzic wartosc liczbowa.")
+        except ValueError: print("\n Błąd wartosci! Prosze wprowadzic wartosc liczbowa.")
 
 Bold = '\033[1m'
 End = '\033[0m'
@@ -19,14 +19,14 @@ def solve_nonlinear():
     print("\n\t--- 1. Rownania nieliniowe (Metoda bisekcji) ---")
     print(f" Rownanie za domyslnym: {Bold}f(x) = 3 × x² - 4{End}")
     
-    print(f"\n {Bold}OPIS METODY BISEKCJI:{End}")
+    print(f" {Bold}OPIS METODY BISEKCJI:{End}")
     print(" • To jest numer yczny metod do znalezienia pierwiastka funkcji f(x) = 0")
     print(" • Zasnowany na zasadzie 'dzielmy interval na pol' (bisekcja = roztin)")
     print(" • Wymaga, zeby funkcja byla nieprzerywna i zmienial znak na koncach intervalu")
     print(" • Prosty, niezawodny i gwarantowany proces zbieznosci")
-    print(" • Nie wymaga liczenia pochodnych\n")
+    print(" • Nie wymaga liczenia pochodnych")
     
-    print(f" {Bold}ALGORYTM:{End}")
+    print(f"\n {Bold}ALGORYTM:{End}")
     print(" 1. Zadajemy interval [a, b], gdzie f(a) i f(b) maja rozne znaki")
     print(" 2. Znajdujemy srodek: c = (a + b) / 2")
     print(" 3. Sprawdzamy znak f(c):")
@@ -42,7 +42,7 @@ def solve_nonlinear():
     
     # Перевірка теореми Больцано-Коші: на кінцах проміжку значення мають бути різних знаків
     if f(a) * f(b) >= 0:
-        print("\n Blad: Funkcja powinna miec rozne znaki na koncach przedzialu!")
+        print("\n Błąd: Funkcja powinna miec rozne znaki na koncach przedzialu!")
         print(f" f({a:.2f}) = {f(a):.2f}")
         print(f" f({b:.2f}) = {f(b):.2f}")
         print(f" Iloczyn: f(a) * f(b) = {f(a) * f(b):.2f} > 0")
@@ -51,9 +51,9 @@ def solve_nonlinear():
     
     print(f"\n {Bold}DETALE ROZWIAZANIA:{End}")
     print(f" Szukamy pierwiastka f(x) = 0 w przedziale [{a:.2f}, {b:.2f}]")
-    print(f" Dokladnosc (maksymalna dopuszczalna blad): epsilon = {e}")
+    print(f" Dokladnosc (maksymalna dopuszczalna Błąd): epsilon = {e}")
     print(f" Warunki poczatkowe: f({a:.2f}) = {f(a):.2f}, f({b:.2f}) = {f(b):.2f}")
-    print(f" f({a:.2f}) * f({b:.2f}) = {f(a)*f(b):.2f} < 0 ✓ (znaki rozne)\n")
+    print(f" f({a:.2f}) * f({b:.2f}) = {f(a)*f(b):.2f} < 0 ✓ (znaki rozne)")
     
     krok = 0
     while (b - a) / 2 > e:
@@ -90,7 +90,7 @@ def solve_nonlinear():
     print(f" Szerokosc: {(b-a):.2f} <= {e} (dokladnosc osiagnieta)")
     print(f" Pierwiastek (przybliżenie): x ≈ {x_result:.2f}")
     print(f" Sprawdzenie: f({x_result:.2f}) = {f(x_result):.2f}")
-    print(f"\n ★★★ ROZWIAZANIE ZNALEZIONE: x ≈ {x_result:.2f} ★★★\n")
+    print(f" ★ ★ ★ ROZWIAZANIE ZNALEZIONE: x ≈ {x_result:.2f} ★ ★ ★")
 
 """========================================================================================================================================================"""
 
@@ -103,7 +103,7 @@ def solve_integration():
         f = lambda x: eval(funkcja)
         f(0)
     except:
-        print(" Blad! Nieprawidlowa funkcja!")
+        print(" Błąd! Nieprawidlowa funkcja!")
         return
     
     print(f"\n Calkowanie funkcji: {Bold}f(x) = {funkcja}{End}")
@@ -127,7 +127,7 @@ def solve_integration():
     n = int(get_float_input(" Wprowadz liczbe podzialow (n): "))
     
     if n < 1:
-        print(" Blad! Liczba podzialow musi byc >= 1")
+        print(" Błąd! Liczba podzialow musi byc >= 1")
         return
 
     h = (b - a) / n
@@ -165,27 +165,27 @@ def solve_integration():
     print(f" Suma wartosci we wnętrzu: {suma:.4f}")
     print(f" Suma z połowami koncow: {((f(a) + f(b)) / 2 + suma):.4f}")
     print(f" Wynik: {h:.4f} × {((f(a) + f(b)) / 2 + suma):.4f} = {wynik:.4f}")
-    print(f"\n ★★★ WYNIK CALKOWANIA: ∫f(x)dx ≈ {wynik:.4f} ★★★\n")
+    print(f" ★ ★ ★ WYNIK CALKOWANIA: ∫f(x)dx ≈ {wynik:.4f} ★ ★ ★")
 
 """========================================================================================================================================================"""
 
 def solve_linear_systems():
     print("\n\t--- 3. Systemy rownan liniowych (metoda Gaussa) ---")
     
-    print(f"\n {Bold}OPIS METODY GAUSSA:{End}")
+    print(f" {Bold}OPIS METODY GAUSSA:{End}")
     print(" • Klasyczny metod do rozwiazania systemow rownan liniowych")
     print(" • Transformuje macierz do postaci trójkątnej (eliminacja Gaussa)")
     print(" • Nastepnie uzywa podstawiania wstecznego do znalezienia zmiennych")
     print(" • Wybiera element maksymalny (pivot) dla stabilnosci numerycznej")
-    print(" • Zlozonosc: O(n³)\n")
+    print(" • Zlozonosc: O(n³)")
     print(f"\n {Bold}ALGORYTM:{End}")
     print(" 1. Tworzymy rozszerzoną macierz [A|b], gdzie A - wspoldzynniki, b - wolne wyrazy")
     print(" 2. PRZÓD (eliminacja Gaussa):")
     print("    - Dla kazdego wiersza wybieramy maksymalny element (pivot)")
     print("    - Normalizujemy wiersz na ten element")
     print("    - Eliminujemy zmienną z nizszych wierszy")
-    print(" 3. WSTECZ (podstawianie wsteczne): liczymy zmienne od dolu do gory\n")
-    print("\n Wybierz rozmiar macierzy:")
+    print(" 3. WSTECZ (podstawianie wsteczne): liczymy zmienne od dolu do gory")
+    print(" Wybierz rozmiar macierzy:")
     print(" 1. [2 × 3]")
     print(" 2. [3 × 3]")
     print(" 3. [4 × 3]")
@@ -210,10 +210,10 @@ def solve_linear_systems():
     elif choice == '7':
         n, m = 5, 5
     else:
-        print("\n Niew lasciwy wybor.")
+        print(" Niew lasciwy wybor.")
         return
     
-    print(f"\n Wybrano rozmiar [{n}×{m}]")
+    print(f"\n Wybrano rozmiar [{n} × {m}]")
     print(f" {Bold}DETALE ROZWIAZANIA:{End} ")
     
     matrix = []
@@ -298,7 +298,7 @@ def solve_linear_systems():
         print(f"\n {Bold}FINALNY WYNIK:{End}")
         for i, x in enumerate(x_res):
             print(f" x{i+1} = {x:.4f}")
-        print(f"\n ★★★ ROZWIAZANIE: {', '.join([f'x{i+1}={x:.4f}' for i, x in enumerate(x_res)])} ★★★\n")
+        print(f" ★ ★ ★ ROZWIAZANIE: {', '.join([f'x{i+1}={x:.4f}' for i, x in enumerate(x_res)])} ★ ★ ★")
     else:
         print("\n ⚠ System nie jest kwadratowy - nie ma jednoznacznego rozwiazania")
         print(" Macierz w postaci echelonnej jest pokazana wyzej.")
@@ -308,13 +308,13 @@ def solve_linear_systems():
 def solve_interpolation():
     print("\n\t--- 4. Interpolacja (Cubic Spline) ---")
     
-    print(f"\n {Bold}OPIS METODY CUBIC SPLINE:{End}")
+    print(f" {Bold}OPIS METODY CUBIC SPLINE:{End}")
     print(" • To metod gładkiej interpolacji, ktora przechodzi DOKLADNIE przez wszystkie podane punkty")
     print(" • Uzywa kubicznych (trzeciego stopnia) wielomianow do łączenia punktów")
     print(" • Na kazdy przedział między dwoma punktami przypada inny wielomian")
     print(" • Warunki gładkosci: funkcja i jej pochodne są ciągłe w punktach połączenia")
     print(" • Korzystnie dla tworzenia płynnych krzywych bez ostrych przeskoków")
-    print(" • Czesto uzywane w grafice komputerowej i projektowaniu\n")
+    print(" • Czesto uzywane w grafice komputerowej i projektowaniu")
     print(f"\n {Bold}ALGORYTM PODSTAWOWY:{End}")
     print(" 1. Mamy n punktów (x0,y0), (x1,y1), ..., (xn,yn)")
     print(" 2. Znajdujemy n-1 wielomianów trzeciego stopnia dla każdego przedziału")
@@ -323,7 +323,7 @@ def solve_interpolation():
     
     n = int(get_float_input(" Wprowadz liczbe punktów (minimum 2): "))
     if n < 2:
-        print("\n Blad: Do interpolacji splajnami potrzebne są co najmniej 2 punkty.")
+        print("\n Błąd: Do interpolacji splajnami potrzebne są co najmniej 2 punkty.")
         return
         
     x_pts = []
@@ -331,7 +331,7 @@ def solve_interpolation():
     
     print(f"\n {{Bold}}WEJSCIE DANYCH:{{End}}")
     print(" Podaj współrzędne punktów (można uzywac liczb ujemnych)")
-    print(" WAZNE: Wspoldrzedne X musza byc w ROSNACYM porzadku!\n")
+    print(" WAZNE: Wspoldrzedne X musza byc w ROSNACYM porzadku!")
     
     for i in range(n):
         print(f" Punkt {i+1}:")
@@ -339,13 +339,12 @@ def solve_interpolation():
         val_y = get_float_input(f"  Y: ")
         x_pts.append(val_x)
         y_pts.append(val_y)
-    x = np.array(x_pts) # Конвертація списків у масиви NumPy
+    x = np.array(x_pts)
     y = np.array(y_pts)
     
-    # Перевірка умови строгого зростання аргументу X (необхідно для інтерполяції)
     if not np.all(np.diff(x) > 0):
-        print("\n Blad: Wspoldrzedne X musza byc w porządku rosnacym!")
-        print(" Upewnij sie, ze X1 < X2 < ... < Xn.")
+        print(" Błąd: Wspoldrzedne X musza byc w porządku rosnacym!")
+        print(" Upewnij się, ze X1 < X2 < ... < Xn.")
         return
 
     print(f"\n {Bold}WPROWADZONE PUNKTY:{End}")
@@ -357,9 +356,8 @@ def solve_interpolation():
     
     cs = CubicSpline(x, y)
     
-    # Генерація 300 точок на інтервалі від X_min до X_max для побудови плавної лінії
     x_fine = np.linspace(x.min(), x.max(), 300)
-    y_interp = cs(x_fine) # Розрахунок інтерпольованих значень Y
+    y_interp = cs(x_fine)
     
     print(" ✓ Splajny pomyslnie obliczone")
     print(" ✓ Wszystkie wprowadzone punkty włączone do interpolacji")
@@ -388,29 +386,29 @@ def solve_interpolation():
     plt.tight_layout()
     plt.show()
     
-    print(" ★★★ INTERPOLACJA ZAKONCZONA POWODZENIEM ★★★\n")
+    print(" ★ ★ ★ INTERPOLACJA ZAKONCZONA POWODZENIEM ★ ★ ★")
 
 """========================================================================================================================================================"""
 
 def solve_approximation():
     print("\n\t--- 5. Aproksymacja (Metoda Najmniejszych Kwadratów) ---")
     
-    print(f"\n {{Bold}}OPIS METODY NAJMNIEJSZYCH KWADRATÓW:{{End}}")
+    print(f" {{Bold}}OPIS METODY NAJMNIEJSZYCH KWADRATÓW:{{End}}")
     print(" • Metod do znalezienia przyblizonej zaleznosci między zmiennymi")
     print(" • Na różnicę od interpolacji, krzywa NIE MUSI przechodzić przez punkty")
     print(" • Minimalizuje sumę kwadratów błędów: min Σ(f(xi) - yi)²")
     print(" • Korzystna dla danych z szumem lub gdy potrzebny jest ogólny trend")
     print(" • Mozna wybrać stopień wielomianu dla kontroli gładkosci")
-    print(" • Prostsza obliczeniowo niz interpolacja\n")
+    print(" • Prostsza obliczeniowo niz interpolacja")
     print(f"\n {{Bold}}ALGORYTM:{{End}}")
     print(" 1. Wybieramy stopień wielomianu d")
     print(" 2. Szukamy wielomianu p(x) = a0 + a1 × x + a2 × x² + ... + ad × x^d")
     print(" 3. Wspoldzynniki obliczane aby zminimalizowac sume kwadratów odchylen")
-    print(" 4. Mozna liczyć bledy przybliżenia (MSE, RMSE)\n")
+    print(" 4. Mozna liczyć bledy przybliżenia (MSE, RMSE)")
     
     n = int(get_float_input(" Wprowadz liczbe punktów: "))
     if n < 2:
-        print("\n Blad: Potrzebujesz co najmniej 2 punktów.")
+        print("\n Błąd: Potrzebujesz co najmniej 2 punktów.")
         return
     
     print(f"\n {{Bold}}WYBOR STOPNIA WIELOMIANU:{{End}}")
@@ -418,11 +416,11 @@ def solve_approximation():
     print(" - Stopień 2: kwadratowa funkcja (parabola)")
     print(" - Stopień 3: kubiczna funkcja (S-podobna krzywa)")
     print(" - Wyzsze stopnie: bardziej złozone formy")
-    print(" UWAGA: Stopień musi byc < liczba punktów\n")
+    print(" UWAGA: Stopień musi byc < liczba punktów")
         
     deg = int(get_float_input(" Wprowadz stopień wielomianu (1, 2, 3, ...): "))
     if deg >= n:
-        print(f"\n Blad: Stopień wielomianu ({deg}) musi byc mniejszy niz liczba punktów ({n})!")
+        print(f"\n Błąd: Stopień wielomianu ({deg}) musi byc mniejszy niz liczba punktów ({n})!")
         print(f" Rekomendacja: uzyj stopnia <= {n-1}")
         return
 
@@ -494,23 +492,23 @@ def solve_approximation():
     plt.tight_layout()
     plt.show()
     
-    print(f" ★★★ APROKSYMACJA ZAKONCZONA - RMSE={rmse:.4f} ★★★\n")
+    print(f" ★★★ APROKSYMACJA ZAKONCZONA - RMSE={rmse:.4f} ★★★")
 
 """========================================================================================================================================================"""
 
 def main_menu():
     while True:
-        print("═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ = = =")
+        print("\n═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ = = =")
         print("                  KALKULATOR MATEMATYCZNY              ")
         print("═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═")
-        print("\t1. Równania nieliniowe (Bisekcja)")
-        print("\t2. Całkowanie numeryczne (Trapezy)")
-        print("\t3. Systemy równań liniowych (Gauss)")
-        print("\t4. Interpolacja (Cubic Spline)")
-        print("\t5. Aproksymacja (Najmniejsze Kwadraty)")
-        print("\t0. Wyjście")
+        print("\t1. Równania nieliniowe (Metoda Bisekcji)")
+        print("\t2. Całkowanie numeryczne (Metoda Trapezy)")
+        print("\t3. Systemy równań liniowych (Metoda Gaussa)")
+        print("\t4. Interpolacja (Metoda Cubica Spline)")
+        print("\t5. Aproksymacja (Metoda Najmniejszych Kwadratów)")
+        print("\t0.   Wyjście")
 
-        choice = input("\n    Wybierz działanie: ")
+        choice = input("    Wybierz działanie: ")
         if choice == '1':
             solve_nonlinear()
         elif choice == '2':
@@ -525,7 +523,7 @@ def main_menu():
             print("     Dziękujemy za skorzystanie z naszych usług, zapraszamy ponownie!")
             break
         else:
-            print("\n Niewłaściwy wybór. Spróbuj ponownie.")
+            print(" Niewłaściwy wybór. Spróbuj ponownie.")
 
 if __name__ == "__main__":
     main_menu()
