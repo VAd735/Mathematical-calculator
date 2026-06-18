@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 from scipy.interpolate import CubicSpline
 
 def get_float_input(prompt):
+
     "\n Funkcja pomocnicza umozliwiajaca bezpieczne wprowadzanie numerów."
     while True:
         try:
@@ -12,7 +13,6 @@ def get_float_input(prompt):
 
 Bold = '\033[1m'
 End = '\033[0m'
-
 """========================================================================================================================================================"""
 
 def solve_nonlinear():
@@ -36,10 +36,11 @@ def solve_nonlinear():
     
     f = lambda x: 3 * x**2 - 4
     
-    a = get_float_input(" Wprowadz poczatek przedzialu (a): ")
-    b = get_float_input(" Wprowadz koniec przedzialu (b): ")
-    e = get_float_input(" Wprowadz dokladnosc (np. 0.0001): ")
+    a = get_float_input(" Wprowadź początek przedziału (a): ")
+    b = get_float_input(" Wprowadź koniec przedziału (b): ")
+    e = get_float_input(" Wprowadź dokładność (np. 0.1): ")
     
+    # Перевірка теореми Больцано-Коші: на кінцах проміжку значення мають бути різних знаків
     if f(a) * f(b) >= 0:
         print("\n Blad: Funkcja powinna miec rozne znaki na koncach przedzialu!")
         print(f" f({a:.2f}) = {f(a):.2f}")
@@ -100,7 +101,6 @@ def solve_integration():
     
     try:
         f = lambda x: eval(funkcja)
-        # Test
         f(0)
     except:
         print(" Blad! Nieprawidlowa funkcja!")
@@ -271,6 +271,7 @@ def solve_linear_systems():
         s = " | ".join([f"{row[j]:8.4f}" for j in range(m)]) + f" | {row[m]:8.4f}"
         print(f" Wiersz {i+1}: {s}")
     
+    # --- ЗВОРОТНИЙ ХІД МЕТОДУ ГАУССА (працює тільки для квадратних систем n == m) ---
     if n == m:
         print(f"\n {Bold}WSTECZ - PODSTAWIANIE WSTECZNE:{End}")
         x_res = [0 for _ in range(n)]
@@ -338,10 +339,10 @@ def solve_interpolation():
         val_y = get_float_input(f"  Y: ")
         x_pts.append(val_x)
         y_pts.append(val_y)
-
-    x = np.array(x_pts)
+    x = np.array(x_pts) # Конвертація списків у масиви NumPy
     y = np.array(y_pts)
     
+    # Перевірка умови строгого зростання аргументу X (необхідно для інтерполяції)
     if not np.all(np.diff(x) > 0):
         print("\n Blad: Wspoldrzedne X musza byc w porządku rosnacym!")
         print(" Upewnij sie, ze X1 < X2 < ... < Xn.")
@@ -356,8 +357,9 @@ def solve_interpolation():
     
     cs = CubicSpline(x, y)
     
+    # Генерація 300 точок на інтервалі від X_min до X_max для побудови плавної лінії
     x_fine = np.linspace(x.min(), x.max(), 300)
-    y_interp = cs(x_fine)
+    y_interp = cs(x_fine) # Розрахунок інтерпольованих значень Y
     
     print(" ✓ Splajny pomyslnie obliczone")
     print(" ✓ Wszystkie wprowadzone punkty włączone do interpolacji")
@@ -497,7 +499,6 @@ def solve_approximation():
 """========================================================================================================================================================"""
 
 def main_menu():
-    """Główne menu programu."""
     while True:
         print("═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ ═ = = =")
         print("                  KALKULATOR MATEMATYCZNY              ")
@@ -528,3 +529,5 @@ def main_menu():
 
 if __name__ == "__main__":
     main_menu()
+
+"""========================================================================================================================================================"""
