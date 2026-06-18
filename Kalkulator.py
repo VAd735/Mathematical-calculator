@@ -34,12 +34,12 @@ def solve_nonlinear():
         print(" Oznacza to, że w przedziale musi istnieć przynajmniej jedno miejsce, gdzie funkcja zmienia znak.")
         return
     
-    step = 0
+    krok = 0
     while (b - a) / 2 > e:
-        step += 1
+        krok += 1
         xc = (a + b) / 2
         fm = f(xc)
-        print(f" Krok {step}: a = {a:.4f}; b = {b:.4f}; środek = {xc:.4f}; f(a) = {f(a):.4f}; f(b) = {f(b):.4f}; f(mid) = {fm:.4f}")
+        print(f" Krok {krok}: a = {a:.4f}; b = {b:.4f}; środek = {xc:.4f}; f(a) = {f(a):.4f}; f(b) = {f(b):.4f}; f(mid) = {fm:.4f}")
         
         if fm == 0:
             print("\n Znaleziono dokładny pierwiastek w środku przedziału.")
@@ -50,7 +50,7 @@ def solve_nonlinear():
         else:
             print("\n Ponieważ f({xc}) i f({b}) mają przeciwne znaki, rozwiązanie jest w prawym podprzedziale.")
             a = xc
-            print(f" Krok {step}: a = {a:.4f}; b = {b:.4f}; środek = {xc:.4f}; f(a) = {f(a):.4f}; f(b) = {f(b):.4f}; f(mid) = {fm:.4f}")
+            print(f" Krok {krok}: a = {a:.4f}; b = {b:.4f}; środek = {xc:.4f}; f(a) = {f(a):.4f}; f(b) = {f(b):.4f}; f(mid) = {fm:.4f}")
     print(f"*** Wynik: x ≈ {(a + b) / 2:.4f} ***")
 
 """========================================================================================================================================================"""
