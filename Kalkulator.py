@@ -2,7 +2,7 @@
 import math
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.interpolate import CubicSpline 
+from scipy.interpolate import CubicSpline #Interpolacja
 
 def get_float_input(prompt):
     """\nFunkcja pomocnicza umożliwiająca bezpieczne wprowadzanie numerów."""
@@ -193,13 +193,12 @@ def solve_interpolation():
     x_pts = []
     y_pts = []
     
-    print("\n Podaj współrzędne punktów (sortuj według rosnącego X):")
+    print("\n Podaj współrzędne punktów (można użyć liczb ujemnych, sortuj według rosnącego X):")
     for i in range(n):
-        # Називаємо змінні val_x oraz val_y, щоб не було конфлікту зі списками
-        val_x = get_float_input(f" Punkt {i+1} -> X: ")
-        val_y = get_float_input(f" Punkt {i+1} -> Y: ")
+        print(f" Punkt {i+1}")
+        val_x = get_float_input(f" -> X: {val_x}")
+        val_y = get_float_input(f" -> Y: {val_y}")
         
-        # Додаємо їх до відповідних списков
         x_pts.append(val_x)
         y_pts.append(val_y)
 
@@ -218,13 +217,21 @@ def solve_interpolation():
     
     print("\n Obliczenia zakończone sukcesem. Generowanie wykresu...")
     
-    plt.figure (figsize = (8, 5))
-    plt.scatter (x, y, color = 'red', s = 60, zorder = 5, label = 'Punkty węzłowe (Dane)')
-    plt.plot (x_fine, y_interp, color = 'blue', linewidth = 2, label = 'Interpolacja (Cubic Spline)')
-    plt.title ('Interpolacja Splajnem Sześciennym')
-    plt.xlabel ('X')
-    plt.ylabel ('Y')
-    plt.grid (True, linestyle = ':', alpha = 0.6)
+    plt.figure(figsize=(8, 5))
+    plt.scatter(x, y, color='red', s=60, zorder=5, label='Punkty węzłowe (Dane)')
+    plt.plot(x_fine, y_interp, color='blue', linewidth=2, label='Interpolacja (Cubic Spline)')
+    plt.axhline(0, color='black', linewidth=0.8, linestyle='-')
+    plt.axvline(0, color='black', linewidth=0.8, linestyle='-')
+    x_margin = (x.max() - x.min()) * 0.05 if x.max() != x.min() else 1
+    y_min = min(y.min(), y_interp.min())
+    y_max = max(y.max(), y_interp.max())
+    y_margin = (y_max - y_min) * 0.05 if y_max != y_min else 1
+    plt.xlim(x.min() - x_margin, x.max() + x_margin)
+    plt.ylim(y_min - y_margin, y_max + y_margin)
+    plt.title('Interpolacja Splajnem Sześciennym')
+    plt.xlabel('X')
+    plt.ylabel('Y')
+    plt.grid(True, linestyle=':', alpha=0.6)
     plt.legend()
     plt.show()
 
@@ -249,11 +256,9 @@ def solve_approximation():
     y_pts = []
     
     for i in range(n):
-        # Називаємо змінні val_x oraz val_y, щоб не було конфлікту зі списками
-        val_x = get_float_input(f" Punkt {i+1} -> X: ")
-        val_y = get_float_input(f" Punkt {i+1} -> Y: ")
-        
-        # Додаємо їх до відповідних списков
+        print(f"\n Punkt {i+1}")
+        val_x = get_float_input(f" -> X: ")
+        val_y = get_float_input(f" -> Y: ")
         x_pts.append(val_x)
         y_pts.append(val_y)
 
@@ -271,13 +276,21 @@ def solve_approximation():
     
     print("\n Obliczenia zakończone sukcesem. Generowanie wykresu...")
     
-    plt.figure (figsize = (8, 5))
-    plt.scatter (x, y, color = 'red', s = 60, zorder = 5, label = ' Punkty pomiarowe ')
-    plt.plot (x_fine, y_approx, color = 'green', linestyle = '--', linewidth = 2.5, label = f'Aproksymacja (Stopień {deg})')
-    plt.title ('Aproksymacja Wielomianowa (Metoda Najmniejszych Kwadratów)')
-    plt.xlabel ('X')
-    plt.ylabel ('Y')
-    plt.grid (True, linestyle = ':', alpha = 0.6)
+    plt.figure(figsize=(8, 5))
+    plt.scatter(x, y, color='red', s=60, zorder=5, label=' Punkty pomiarowe ')
+    plt.plot(x_fine, y_approx, color='green', linestyle='--', linewidth=2.5, label=f'Aproksymacja (Stopień {deg})')
+    plt.axhline(0, color='black', linewidth=0.8, linestyle='-')
+    plt.axvline(0, color='black', linewidth=0.8, linestyle='-')
+    x_margin = (x.max() - x.min()) * 0.05 if x.max() != x.min() else 1
+    y_min = min(y.min(), y_approx.min())
+    y_max = max(y.max(), y_approx.max())
+    y_margin = (y_max - y_min) * 0.05 if y_max != y_min else 1
+    plt.xlim(x.min() - x_margin, x.max() + x_margin)
+    plt.ylim(y_min - y_margin, y_max + y_margin)
+    plt.title('Aproksymacja Wielomianowa (Metoda Najmniejszych Kwadratów)')
+    plt.xlabel('X')
+    plt.ylabel('Y')
+    plt.grid(True, linestyle=':', alpha=0.6)
     plt.legend()
     plt.show()
 
